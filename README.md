@@ -25,6 +25,8 @@ https://spacedock.info/mod/69/kRPC
 - 继承了 Behaviour 的类实例可以**AddComponent**、**GetComponent**与同一载具或不同载具上的其它组件互动
 - **Log()** 在窗口下半部分文本框中输出单条信息
 - **LogInfo()** 每一帧都调用一次，就可以在窗口上半部分文本框中持续输出动态的信息
+- 可以调用 **Time.deltaTime** 、 **Time.gameDeltaTime** 获取前一帧的时间
+- 可以调用 **Input.GetKeyDown** 等获取键盘输入（是form上的键盘输入而非游戏中的）
 
 ## 如何写一个新的Behaviour
 
@@ -39,8 +41,14 @@ https://spacedock.info/mod/69/kRPC
 - 继承自Behaviour，也是一个可以附着到vessel上的组件
 - 当需要每一帧频繁调用某个数据时就需要用这个，以优化通讯效率
 - 实例上有GetPisition、GetRotation等方法，调用时会自动建立一个流，长时间不调用会自动关闭流
-- 
+
 ## class SoftLanding
 
 - 非常简单的着陆 Demo，用匀加速直线运动公式计算落地所需推力
+方法，调用时会自动建立一个流，长时间不调用会自动关闭流
+
+## Ext
+
+- 给Vessel类拓展了一些东西如AddComponent
+- 还有CelestialBody、Orbit、Tuple<一堆T> 类的拓展
 
