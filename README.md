@@ -5,8 +5,9 @@
 
 ## Quick Start
 - 建议游戏调成窗口模式
-- 游戏中安装KRPC的Mod 
+- 游戏中安装 KRPC 的 Mod 
 https://spacedock.info/mod/69/kRPC
+- 游戏中打开 Mod 的服务器
 - 让一个类似火箭的东西从空中下落，SAS打开对准地表速度反方向
 - 运行程序
 - 应该可以看到窗口出现，到一定高度时开始反推，然后落地
