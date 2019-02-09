@@ -1,5 +1,7 @@
 # KRPC Controller
 
+- 这整个项目其实是一个仿 Unity 的框架，有较强的可拓展性。
+- 主要看 ConnectionInitializer 类和 Behaviours 文件夹内的几个类。 ConnectionInitializer 类里面是初始化的组件， Behaviours 文件夹里则是放组件类的地方。
 
 ## Quick Start
 - 建议游戏调成窗口模式
@@ -36,18 +38,20 @@ https://spacedock.info/mod/69/kRPC
 - 写上自己的逻辑
 - 不要忘了在 ConnectionInitializer 类里初始化的时候给 vessel 添加这个组件
 
-## class CommonDataStream
+## 一些类的解释
+
+### class CommonDataStream
 
 - 继承自Behaviour，也是一个可以附着到vessel上的组件
 - 当需要每一帧频繁调用某个数据时就需要用这个，以优化通讯效率
 - 实例上有GetPisition、GetRotation等方法，调用时会自动建立一个流，长时间不调用会自动关闭流
 
-## class SoftLanding
+### class SoftLanding
 
 - 非常简单的着陆 Demo，用匀加速直线运动公式计算落地所需推力
 方法，调用时会自动建立一个流，长时间不调用会自动关闭流
 
-## Ext
+### class Ext
 
 - 给Vessel类拓展了一些东西如AddComponent
 - 还有CelestialBody、Orbit、Tuple<一堆T> 类的拓展
