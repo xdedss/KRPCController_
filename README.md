@@ -1,3 +1,5 @@
+[英文教程：http://krpc.github.io/krpc/](http://krpc.github.io/krpc/)
+
 # KRPC Controller
 
 - 这整个项目其实是一个仿 Unity 的框架，有较强的可拓展性。
