@@ -57,7 +57,10 @@
     <Compile Include="Behaviour.cs" />
     <Compile Include="Behaviours\CommonDataStream.cs" />
     <Compile Include="Behaviours\InfoLog.cs" />
+    <Compile Include="Behaviours\PointLanding.cs" />
     <Compile Include="Behaviours\SoftLanding.cs" />
+    <Compile Include="Behaviours\SoftLandingTilt.cs" />
+    <Compile Include="Behaviours\StabilityControlSeparated.cs" />
     <Compile Include="ConnectionInitializer.cs" />
     <Compile Include="Coroutine.cs" />
     <Compile Include="Ext.cs" />
