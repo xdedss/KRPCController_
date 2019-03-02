@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace KRPCController
 {
-    /// <summary>
-    /// 用于将调试信息输出到窗口上
-    /// </summary>
     static class Info
     {
+        public static bool paused = false;
+
         public class InfoValue
         {
             public string info;
@@ -49,22 +48,25 @@ namespace KRPCController
 
         public static void Update()
         {
-            var str = "";
-
-            foreach(var i in infos)
+            if (!paused)
             {
-                var stat = "N";
-                if (i.Value.times == 0)
-                    stat = "O";
-                else if (i.Value.times > 1)
-                    stat = "D";
-                //var outdated = i.Value.times == 0 ? "(Outdated)" : "";
-                //var duplicated = i.Value.times > 1 ? "(Duplicated)" : "";
-                str += string.Format("[{2}]{0} :  {1}   \r\n", i.Key, i.Value.info, stat);
-            }
-            ConnectionInitializer.UpdateInfo(str);
+                var str = "";
 
-            Clear();
+                foreach (var i in infos)
+                {
+                    var stat = "N";
+                    if (i.Value.times == 0)
+                        stat = "O";
+                    else if (i.Value.times > 1)
+                        stat = "D";
+                    //var outdated = i.Value.times == 0 ? "(Outdated)" : "";
+                    //var duplicated = i.Value.times > 1 ? "(Duplicated)" : "";
+                    str += string.Format("[{2}]{0} :  {1}   \r\n", i.Key, i.Value.info, stat);
+                }
+                ConnectionInitializer.UpdateInfo(str);
+
+                Clear();
+            }
         }
 
         static void Clear()

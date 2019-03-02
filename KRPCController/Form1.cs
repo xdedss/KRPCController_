@@ -18,12 +18,20 @@ namespace KRPCController
         {
             InitializeComponent();
             ConnectionInitializer.form = this;
-            ConnectionInitializer.Init();
+            //ConnectionInitializer.Init();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             Time.Update();
+        }
+
+        private void timerFast_Tick(object sender, EventArgs e)
+        {
+            if (ConnectionInitializer.socketServer != null)
+            {
+                ConnectionInitializer.socketServer.Update();
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -39,6 +47,21 @@ namespace KRPCController
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Info.paused ^= true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ConnectionInitializer.Init();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ConnectionInitializer.InitSocket();
         }
     }
 }
