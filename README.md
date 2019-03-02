@@ -5,7 +5,10 @@
 - 这整个项目其实是一个仿 Unity 的框架，有较强的可拓展性。
 - 主要看 ConnectionInitializer 类和 Behaviours 文件夹内的几个类。 ConnectionInitializer 类里面是初始化的组件， Behaviours 文件夹里则是放组件类的地方。
 
-## Quick Start
+## Quick Start 0
+于2019.03.02(YYYY.MM.DD)添加了转发安卓设备模拟摇杆数据的功能，请配合[KSP_AndroidJoystick](https://github.com/xdedss/KSP_AndroidJoystick)食用
+
+## Quick Start 1
 - 建议游戏调成窗口模式
 - 游戏中安装 KRPC 的 Mod 
 https://spacedock.info/mod/69/kRPC
