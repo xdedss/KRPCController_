@@ -28,6 +28,7 @@ namespace KRPCController
             public Vector2 joystickL;
             public Vector2 joystickR;
             public float throttle;
+            public float rudder;
             public bool[] toggles;
         }
 
@@ -54,7 +55,7 @@ namespace KRPCController
                     vessel.Control.Pitch = -data.joystickR.Y;
                     vessel.Control.Roll = data.joystickR.X;
                     vessel.Control.Yaw = data.joystickL.X;
-                    vessel.Control.WheelSteering = -data.joystickL.X;
+                    vessel.Control.WheelSteering = -data.rudder;
                     for(int i = 1; i < 10; i++)
                     {
                         if (data.toggles[i])
@@ -101,19 +102,21 @@ namespace KRPCController
             var j1 = new Vector2(((float)bytes[0]) / 255 * 2 - 1, ((float)bytes[1]) / 255 * 2 - 1);
             var j2 = new Vector2(((float)bytes[2]) / 255 * 2 - 1, ((float)bytes[3]) / 255 * 2 - 1);
             var thr = ((float)bytes[4]) / 255;
+            var rud = ((float)bytes[5]) / 255 * 2 - 1;
             data.joystickL = j1;
             data.joystickR = j2;
             data.throttle = thr;
+            data.rudder = rud;
             for(int i = 0; i < 8; i++)
             {
-                if((bytes[5] & ByteMask(i)) != 0)
+                if((bytes[6] & ByteMask(i)) != 0)
                 {
                     data.toggles[i] = true;
                 }
             }
             for(int i = 8; i < 16; i++)
             {
-                if((bytes[6] & ByteMask(i - 8)) != 0)
+                if((bytes[7] & ByteMask(i - 8)) != 0)
                 {
                     data.toggles[i] = true;
                 }
