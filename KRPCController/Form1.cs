@@ -30,7 +30,7 @@ namespace KRPCController
         {
             if (ConnectionInitializer.socketServer != null)
             {
-                ConnectionInitializer.socketServer.Update();
+                ConnectionInitializer.UpdateSocket();
             }
         }
 

@@ -38,6 +38,39 @@ namespace KRPCController
             socketServer.StartListen();
         }
 
+        public static byte[] Bundle()
+        {
+            if (conn != null)
+            {
+                var vessel = conn.SpaceCenter().ActiveVessel;
+                if (vessel != null)
+                {
+                    var flight = vessel.Flight();
+                    var bodyRef = vessel.Orbit.Body.ReferenceFrame;
+                    var pitch = flight.Pitch;
+                    var roll = flight.Roll;
+                    var hdg = flight.Heading;
+                    var srfVel = vessel.Velocity(bodyRef).ToVec().Length;
+
+                    var pitchs = (ushort)Math.Round((pitch + 90) / 180 * 65535);
+                    var rolls = (ushort)Math.Round((roll + 180) / 360 * 65535);
+                    var hdgs = (ushort)Math.Round(hdg / 360 * 65535);
+
+                    var pitchb = BitConverter.GetBytes(pitchs);
+                    var rollb = BitConverter.GetBytes(rolls);
+                    var hdgb = BitConverter.GetBytes(hdgs);
+                    var srfVelb = BitConverter.GetBytes(srfVel);
+                    return new byte[] {
+                        pitchb[0], pitchb[1],
+                        rollb[0], rollb[1],
+                        hdgb[0], hdgb[1],
+                        srfVelb[0], srfVelb[1], srfVelb[2], srfVelb[3]
+                    };
+                }
+            }
+            return null;
+        }
+
         public static void HandleSocketData(byte[] bytes)
         {
             var bytesStr = bytes[0].ToString() + '|' + bytes[1].ToString() + '|' + bytes[2].ToString() + '|' + bytes[3].ToString() + '|' + bytes[4].ToString() + '|' + bytes[5].ToString();
@@ -85,17 +118,6 @@ namespace KRPCController
             }
         }
 
-        public static SocketData ParseSocketData(string msg)
-        {
-            var msgs = msg.Split('|');
-            var data = new SocketData();
-            var j1 = new Vector2(float.Parse(msgs[0]), float.Parse(msgs[1]));
-            var j2 = new Vector2(float.Parse(msgs[2]), float.Parse(msgs[3]));
-            data.joystickL = j1;
-            data.joystickR = j2;
-            return data;
-        }
-
         public static SocketData ParseSocketBytes(byte[] bytes)
         {
             var data = new SocketData();
@@ -136,6 +158,12 @@ namespace KRPCController
             Log("Connected:  " + krpc.GetStatus().Version);
 
             InitComponents();
+        }
+
+        public static void UpdateSocket()
+        {
+            socketServer.dataToSend = Bundle();
+            socketServer.Update();
         }
 
         public static void InitComponents()

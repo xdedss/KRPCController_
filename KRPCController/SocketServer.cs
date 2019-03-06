@@ -16,6 +16,8 @@ namespace SocketUtil
         public bool listening = false;
         private List<Socket> clients = new List<Socket>();
 
+        public byte[] dataToSend;
+
         private object locker = new object();
 
         private string _ip = string.Empty;
@@ -86,6 +88,13 @@ namespace SocketUtil
                                     //ConnectionInitializer.Log(msg);
                                     Console.WriteLine("接收客户端{0},长度{2},消息{1}", clientSocket.RemoteEndPoint.ToString(), bytes.ToString(), bytes.Length);
                                     ConnectionInitializer.HandleSocketData(bytes);
+
+
+                                    //如果收到了就发送回信，客户端控制频率
+                                    if (dataToSend != null && dataToSend.Length > 0)
+                                    {
+                                        clientSocket.Send(dataToSend);
+                                    }
                                 }
                             }
                             catch (Exception ex)
