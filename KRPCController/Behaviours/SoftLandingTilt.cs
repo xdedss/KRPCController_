@@ -67,25 +67,25 @@ namespace KRPCController.Behaviours
 
             //float vg = (float)Math.Sqrt(2 * alt * g + srfVel.X * srfVel.X);
             //float apprT = (vg + srfVel.X) / g;
-            float apprT = -vel.X / (a - g);
-            float dt = Math.Max(apprT / 10, 0.01f);
+            float apprT = -vel.X / (a - g);//在忽略空气阻力和水平速度的情况下预估出将竖直速度降至零所需的大致时间
+            float dt = Math.Max(apprT / 10, 0.01f);//递推的步长
             int count = 0;
             while(vel.X < 0 && count < 30)
             {
                 count++;
                 t += dt;
-                vel -= vel.Normalized() * a * dt;
-                vel.X -= g * dt;
+                vel -= vel.Normalized() * a * dt;//推力的加速
+                vel.X -= g * dt;//重力的加速
                 //var drag = flightSrf.SimulateAerodynamicForceAt(body, pos.ToTuple(), vel.ToTuple()).ToVec();
                 //if(drag.Length > )
                 //vel += drag / vessel.Mass * dt;
-                pos += vel * dt;
+                pos += vel * dt;//位移
             }
 
             //line.End = pos.ToTuple();
             //var estAlt = (float)body.SrfAltitudeAtPosision(pos, surfaceRef) - vesselHeight;// wtf no way to optimize
-            var estAlt = alt + pos.X;
-            var notSpareRate = -pos.X / (-pos.X + estAlt);
+            var estAlt = alt + pos.X;//预计停下的高度
+            var notSpareRate = -pos.X / (-pos.X + estAlt);//这个比值越接近 1说明剩余的减速空间越小
 
             estT = t;
             //LogInfo("srfVel", srfVel.ToString());
@@ -119,7 +119,7 @@ namespace KRPCController.Behaviours
                 }
                 else
                 {
-                    vessel.Control.Throttle = notSpareRate + (notSpareRate - 0.8f) * 2;
+                    vessel.Control.Throttle = notSpareRate + (notSpareRate - 0.8f) * 2;//反馈调节notSpareRate到0.8
                 }
             }
             else
