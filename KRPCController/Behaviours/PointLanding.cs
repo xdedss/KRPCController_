@@ -42,7 +42,7 @@ namespace KRPCController.Behaviours
         //Line line;
         public override void Start()
         {
-            //default 默认返回到VAB楼顶靠北的那个停机坪
+            //default 默认返回到VAB楼顶靠北的那个停机坪   //？？？停机坪不是东西向两个的吗哪里有靠北的 我都不记得我这写的什么玩意
             Lon = -74.6200965;
             Lat = -0.0967588;
             Height = 0;// 110;
